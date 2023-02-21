@@ -5,6 +5,7 @@ import SendButton from './UI/SendButton'
 import TextInput from './UI/TextInput'
 import logo from '../assets/logo.jpeg'
 import { Socket } from 'socket.io-client'
+import ChatGPT from './ChatGPT'
 
 interface ChatProps {
 	socket: Socket
@@ -22,6 +23,7 @@ interface NewPost {
 const Chat: FC<ChatProps> = ({ socket, username, avatar }) => {
 	const [posts, setPosts] = useState<NewPost[]>([])
 	const [currentMessage, setCurrentMessage] = useState<string>('')
+	const [chatGPT, setChatGPT] = useState<boolean>(false)
 	const userRef = useRef<null | HTMLDivElement>(null)
 
 	const scrollToBottom = () => {
@@ -53,30 +55,43 @@ const Chat: FC<ChatProps> = ({ socket, username, avatar }) => {
 		})
 	})
 
-	return (
-		<>
-			<ChatTitle logo={logo} />
-			<div className='chat__messages'>
-				{posts.map(post => (
-					<ChatMessage
-						ref={userRef}
-						post={post}
-						key={post.id}
-						direction={post.user === username ? 'row-reverse' : 'row'}
-					/>
-				))}
-			</div>
+	const showChatGPT = () => {
+		setChatGPT(!chatGPT)
+	}
 
-			<form onSubmit={addNewMessage}>
-				<TextInput
-					value={currentMessage}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setCurrentMessage(e.target.value)
-					}
+	return (
+		<div className='chat'>
+			<div className='chat__main'>
+				<ChatTitle
+					logo={logo}
+					showChatGPT={showChatGPT}
 				/>
-				<SendButton onClick={addNewMessage} />
-			</form>
-		</>
+				<div className='chat__messages'>
+					{posts.map(post => (
+						<ChatMessage
+							ref={userRef}
+							post={post}
+							key={post.id}
+							direction={post.user === username ? 'row-reverse' : 'row'}
+						/>
+					))}
+				</div>
+
+				<form
+					onSubmit={addNewMessage}
+					className='chat-form'
+				>
+					<TextInput
+						value={currentMessage}
+						onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+							setCurrentMessage(e.target.value)
+						}
+					/>
+					<SendButton onClick={addNewMessage} />
+				</form>
+			</div>
+			{chatGPT && <ChatGPT />}
+		</div>
 	)
 }
 
