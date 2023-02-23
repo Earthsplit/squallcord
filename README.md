@@ -2,7 +2,8 @@
 
 SquallCord is a Web Application with the intention of mixing both Discord and Telegram!
 
-Version 1.1 update notes:
+Version 1.2 update notes:
 
-- Project was transfered to TypeScript
-- Profile picture upload added
+- Added ChatGPT, user online count
+- Transfer from pure CSS to Tailwind
+- Design improvements

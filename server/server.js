@@ -45,15 +45,20 @@ const io = new Server(server, {
 	},
 })
 
+let userCount = io.engine.clientsCount
+
 io.on('connection', socket => {
-	console.log(`User Connected: ${socket.id}`)
+	console.log(`User connected: ${socket.id}`)
+
+	io.emit('user_connect', userCount)
 
 	socket.on('send_message', data => {
 		io.emit('receive_message', data)
 	})
 
 	socket.on('disconnect', () => {
-		console.log('User Disconnected', socket.id)
+		console.log('User disconnected', socket.id)
+		io.emit('user_disconnect', userCount)
 	})
 })
 

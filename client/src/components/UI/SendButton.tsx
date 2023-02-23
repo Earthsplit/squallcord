@@ -9,7 +9,7 @@ const SendButton: FC<SendButtonProps> = props => {
 	return (
 		<div
 			{...props}
-			className='sendButton'
+			className='cursor-pointer border-l border-grayLight bg-main p-[18px]'
 		>
 			<IoSend />
 		</div>

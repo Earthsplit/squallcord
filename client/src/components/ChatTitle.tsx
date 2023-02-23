@@ -9,15 +9,21 @@ interface ChatTitleProps {
 
 const ChatTitle: FC<ChatTitleProps> = ({ showChatGPT, logo }) => {
 	return (
-		<div className='chat__info'>
-			<div className='chat__info-wrapper'>
-				<Avatar src={logo} />
+		<header
+			className='mb-[10px] flex h-screen w-[200px] flex-col items-center gap-2 overflow-hidden border-r border-grayLight 
+    p-2 text-[20px] font-semibold'
+		>
+			<div className='flex items-center gap-1'>
+				<Avatar
+					src={logo}
+					sx={{ width: 44, height: 44 }}
+				/>
 				<span>SquallCord</span>
 			</div>
 			<div onClick={showChatGPT}>
 				<FaRobot />
 			</div>
-		</div>
+		</header>
 	)
 }
 

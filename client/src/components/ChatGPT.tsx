@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
 import axios from 'axios'
+import MyInput from './UI/MyInput'
 
 const ChatGPT: FC = () => {
 	const [response, setResponse] = useState<string>('')
@@ -34,18 +35,22 @@ const ChatGPT: FC = () => {
 	}
 
 	return (
-		<div className='chatGPT'>
+		<div className='absolute top-0 right-3 mt-[calc(1rem+10px)] flex flex-col items-center gap-4'>
 			<form
 				onSubmit={handleAPIRequest}
-				className='chatGPT-form'
+				className='flex items-center border border-grayLight'
 			>
-				<input
-					type='text'
+				<MyInput
 					value={prompt}
 					onChange={e => setPrompt(e.target.value)}
+					styles='bg-grayLight'
 				/>
 			</form>
-			{showResponse && <div className='chatGPT-response'>{response}</div>}
+			{showResponse && (
+				<div className='w-[200px] rounded-md border border-grayLight bg-grayDark p-[15px] leading-normal'>
+					{response}
+				</div>
+			)}
 		</div>
 	)
 }

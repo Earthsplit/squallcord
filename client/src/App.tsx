@@ -1,7 +1,9 @@
 import { FC, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import Chat from './components/Chat'
-import './App.css'
+import './index.css'
+import StartScreen from './components/StartScreen'
+import { useEffect } from 'react'
 
 const socket: Socket = io('http://localhost:3001/')
 
@@ -9,6 +11,7 @@ const App: FC = () => {
 	const [username, setUsername] = useState<string>('')
 	const [showChat, setShowChat] = useState(false)
 	const [avatar, setAvatar] = useState<string>('')
+	const [userCount, setUserCount] = useState<number>(0)
 
 	const joinRoom = (e: React.FormEvent) => {
 		e.preventDefault()
@@ -16,6 +19,16 @@ const App: FC = () => {
 			setShowChat(true)
 		}
 	}
+
+	useEffect(() => {
+		socket.on('user_connect', data => {
+			setUserCount(data)
+		})
+
+		socket.on('user_disconnect', data => {
+			setUserCount(data)
+		})
+	})
 
 	const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		// stores a file localy instead of going back to the server
@@ -25,39 +38,19 @@ const App: FC = () => {
 	}
 
 	return (
-		<div className='App'>
+		<div className='flex h-screen flex-col justify-center overflow-hidden bg-main text-white'>
 			{!showChat ? (
-				<div className='centered'>
-					<h3>Введіть ваше імʼя</h3>
-					<form
-						onSubmit={joinRoom}
-						style={{ display: 'flex', flexDirection: 'column' }}
-					>
-						<input
-							type='text'
-							placeholder='Файний хлопець 007'
-							onChange={event => {
-								setUsername(event.target.value)
-							}}
-						/>
-						<button
-							type='submit'
-							onClick={joinRoom}
-						>
-							Приєднатися
-						</button>
-						<input
-							type='file'
-							accept='image/png,image/jpeg,image/gif'
-							onChange={onFileInputChange}
-						/>
-					</form>
-				</div>
+				<StartScreen
+					joinRoom={joinRoom}
+					setUsername={setUsername}
+					onFileInputChange={onFileInputChange}
+				/>
 			) : (
 				<Chat
 					socket={socket}
 					username={username}
 					avatar={avatar}
+					userCount={userCount}
 				/>
 			)}
 		</div>
