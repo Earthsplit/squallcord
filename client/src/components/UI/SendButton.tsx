@@ -11,7 +11,7 @@ const SendButton: FC<SendButtonProps> = props => {
 			{...props}
 			className='cursor-pointer border-l border-grayLight bg-main p-[18px]'
 		>
-			<IoSend />
+			<IoSend size={20} />
 		</div>
 	)
 }

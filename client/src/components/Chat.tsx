@@ -1,32 +1,26 @@
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import ChatMessage from './ChatMessage'
-import ChatTitle from './ChatTitle'
+import ChatAside from './ChatAside'
 import SendButton from './UI/SendButton'
 import MyInput from './UI/MyInput'
 import logo from '../assets/logo.jpeg'
-import { Socket } from 'socket.io-client'
 import ChatGPT from './ChatGPT'
-import ChatHeader from './Chat/ChatHeader'
-
-interface ChatProps {
-	socket: Socket
-	username: string
-	avatar: string
-	userCount: number
-}
-
-interface NewPost {
-	id: number
-	user: string
-	avatar: string
-	message: string
-}
+import ChatHeader from './ChatHeader'
+import EmojiPicker from './UI/EmojiPicker'
+import { BiSmile } from 'react-icons/bi'
+import { EmojiData, ChatProps, NewPost } from '../types/index'
 
 const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 	const [posts, setPosts] = useState<NewPost[]>([])
 	const [currentMessage, setCurrentMessage] = useState<string>('')
 	const [chatGPT, setChatGPT] = useState<boolean>(false)
-	const userRef = useRef<null | HTMLDivElement>(null)
+	// const userRef = useRef<null | HTMLDivElement>(null)
+
+	const [emojis, setEmojis] = useState<boolean>(false)
+
+	const addEmoji = (emoji: EmojiData) => {
+		setCurrentMessage(currentMessage + emoji.native)
+	}
 
 	// const scrollToBottom = () => {
 	// 	userRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -52,7 +46,7 @@ const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 	}
 
 	useEffect(() => {
-		socket.on('receive_message', data => {
+		socket.on('receive_message', (data: NewPost) => {
 			setPosts([...posts, data])
 		})
 	})
@@ -64,7 +58,7 @@ const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 	return (
 		<div className='flex h-full flex-col gap-4'>
 			<div className='flex'>
-				<ChatTitle
+				<ChatAside
 					logo={logo}
 					showChatGPT={showChatGPT}
 				/>
@@ -76,11 +70,13 @@ const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 					<div className='w-full flex-grow overflow-scroll py-2'>
 						{posts.map(post => (
 							<ChatMessage
-								ref={userRef}
+								// ref={userRef}
 								post={post}
 								key={post.id}
-								direction={
-									post.user === username ? 'flex-row-reverse' : 'flex-row'
+								styles={
+									post.user === username
+										? 'flex-row-reverse mr-4'
+										: 'flex-row ml-4'
 								}
 							/>
 						))}
@@ -88,7 +84,7 @@ const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 
 					<form
 						onSubmit={addNewMessage}
-						className='flex w-full border-t border-grayLight'
+						className='relative flex w-full items-center border-t border-grayLight'
 					>
 						<MyInput
 							value={currentMessage}
@@ -96,6 +92,16 @@ const Chat: FC<ChatProps> = ({ userCount, socket, username, avatar }) => {
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								setCurrentMessage(e.target.value)
 							}
+						/>
+						<div
+							className='cursor-pointer border-l border-grayLight p-[18px]'
+							onClick={() => setEmojis(!emojis)}
+						>
+							<BiSmile size={25} />
+						</div>
+						<EmojiPicker
+							emojis={emojis}
+							addEmoji={addEmoji}
 						/>
 						<SendButton onClick={addNewMessage} />
 					</form>

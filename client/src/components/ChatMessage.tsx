@@ -1,24 +1,14 @@
-import Avatar from '@mui/material/Avatar'
 import { FC, forwardRef, Ref } from 'react'
+import Avatar from './UI/Avatar'
+import { ChatMessageProps } from '../types/index'
 
-interface ChatMessageProps {
-	direction: 'flex-row-reverse' | 'flex-row'
-	post: {
-		avatar: string
-		user: string
-		message: string
-	}
-	ref: Ref<HTMLDivElement>
-}
-
-const ChatMessage: FC<ChatMessageProps> = forwardRef((props, ref) => {
+const ChatMessage: FC<ChatMessageProps> = props => {
 	return (
-		<div
-			className={`
-				ml-4 flex ${props.direction} items-center gap-2
-			`}
-		>
-			<Avatar src={props.post.avatar} />
+		<div className={`flex ${props.styles} items-center gap-2`}>
+			<Avatar
+				src={props.post.avatar}
+				styles='h-[44px] w-[44px]'
+			/>
 
 			<div
 				style={{
@@ -38,15 +28,12 @@ const ChatMessage: FC<ChatMessageProps> = forwardRef((props, ref) => {
 				>
 					{props.post.user}
 				</div>
-				<div
-					ref={ref}
-					style={{ fontWeight: '300', wordWrap: 'break-word' }}
-				>
+				<div style={{ fontWeight: '300', wordWrap: 'break-word' }}>
 					{props.post.message}
 				</div>
 			</div>
 		</div>
 	)
-})
+}
 
 export default ChatMessage

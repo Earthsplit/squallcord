@@ -1,6 +1,5 @@
-import Avatar from '@mui/material/Avatar'
 import { FC } from 'react'
-import { io, Socket } from 'socket.io-client'
+import Avatar from './UI/Avatar'
 
 interface ChatHeaderProps {
 	logo: string
@@ -13,7 +12,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({ userCount, logo }) => {
 			<div className='flex items-center gap-2'>
 				<Avatar
 					src={logo}
-					sx={{ width: 36, height: 36 }}
+					styles='h-[36px] w-[36px]'
 				/>
 				<div className='flex flex-col'>
 					<span className='text-sm font-semibold'>SquallCord</span>
