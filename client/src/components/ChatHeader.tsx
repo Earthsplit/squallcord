@@ -1,10 +1,6 @@
 import { FC } from 'react'
+import { ChatHeaderProps } from '../types'
 import Avatar from './UI/Avatar'
-
-interface ChatHeaderProps {
-	logo: string
-	userCount: number
-}
 
 const ChatHeader: FC<ChatHeaderProps> = ({ userCount, logo }) => {
 	return (

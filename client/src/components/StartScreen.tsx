@@ -1,11 +1,6 @@
 import { FC } from 'react'
+import { StartScreenProps } from '../types'
 import MyInput from './UI/MyInput'
-
-interface StartScreenProps {
-	joinRoom: (e: React.FormEvent) => void
-	setUsername: (username: string) => void
-	onFileInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
 
 const StartScreen: FC<StartScreenProps> = ({
 	joinRoom,

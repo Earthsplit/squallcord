@@ -50,12 +50,15 @@ let userCount
 io.on('connection', socket => {
 	userCount = io.engine.clientsCount
 	console.log(`User connected: ${socket.id}`)
-	console.log(userCount)
 
 	io.emit('user_connect', userCount)
 
 	socket.on('send_message', data => {
 		io.emit('receive_message', data)
+	})
+
+	socket.on('edit_message', data => {
+		io.emit('receive_edit', data)
 	})
 
 	socket.on('disconnect', () => {

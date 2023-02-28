@@ -1,7 +1,4 @@
-interface PathParams {
-	root: string
-	link: string
-}
+import { PathParams } from '../types'
 
 function path(params: PathParams) {
 	return `${params.root}${params.link}`

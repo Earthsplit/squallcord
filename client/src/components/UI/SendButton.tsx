@@ -1,9 +1,6 @@
 import { FC } from 'react'
 import { IoSend } from 'react-icons/io5'
-
-interface SendButtonProps {
-	onClick: (e: React.FormEvent) => void
-}
+import { SendButtonProps } from '../../types'
 
 const SendButton: FC<SendButtonProps> = props => {
 	return (

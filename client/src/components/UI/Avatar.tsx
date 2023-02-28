@@ -1,10 +1,6 @@
 import { FC } from 'react'
 import userDefault from '../../assets/user_default.svg'
-
-type AvatarProps = {
-	styles: string
-	src: string
-}
+import { AvatarProps } from '../../types'
 
 const Avatar: FC<AvatarProps> = props => {
 	return (

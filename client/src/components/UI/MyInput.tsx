@@ -1,11 +1,5 @@
 import { FC } from 'react'
-
-interface TextInputProps {
-	value?: string
-	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-	placeholder?: string
-	styles?: string
-}
+import { TextInputProps } from '../../types'
 
 const MyInput: FC<TextInputProps> = props => {
 	return (
