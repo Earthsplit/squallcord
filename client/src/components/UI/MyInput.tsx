@@ -6,8 +6,10 @@ const MyInput: FC<TextInputProps> = props => {
 		<input
 			{...props}
 			type='text'
+			name='text-field'
+			autoComplete='off'
 			placeholder={props.placeholder}
-			className={`w-full border-none bg-main p-[18px] text-white outline-none placeholder:text-[14px] placeholder:text-[#a4b2c2] ${props.styles}`}
+			className={`w-full border-none bg-main p-[var(--paddingForm)] text-white outline-none placeholder:text-[14px] placeholder:text-[#a4b2c2] ${props.styles}`}
 		/>
 	)
 }

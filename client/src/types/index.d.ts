@@ -6,18 +6,9 @@ type ChatProps = {
 }
 
 type ChatMessageProps = {
-	styles: 'flex-row-reverse mr-4' | 'flex-row ml-4'
-	post: {
-		avatar: string
-		user: string
-		message: string | NewPost | undefined
-	}
-	// ref: Ref<HTMLDivElement>
-}
-
-type ChatAsideProps = {
-	logo: string
-	showChatGPT: () => void
+	styles: string
+	post: NewPost
+	fullMessage: boolean
 }
 
 type StartScreenProps = {
@@ -38,10 +29,16 @@ type TextInputProps = {
 	styles?: string
 }
 
+type ContextMenuType = {
+	x: number
+	y: number
+	show: boolean
+}
+
 type ContextMenuProps = {
 	x: number
 	y: number
-	handleContextMenuAction: (action: string, post: NewPost) => void
+	handleContextMenuAction: (action: string) => void
 }
 
 type AvatarProps = {
@@ -56,13 +53,21 @@ type SendButtonProps = {
 type EmojiPickerProps = {
 	addEmoji: (emoji: EmojiData) => void
 	emojis: boolean
+	onClickOutside: () => void
+}
+
+type ChatFormProps = {
+	addNewMessage: (e: React.FormEvent) => void
+	currentMessage: string | undefined
+	setCurrentMessage: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 type NewPost = {
-	id: number
+	id: string | null
 	user: string
 	avatar: string
 	message: string | undefined
+	timestamp: number
 }
 
 type EmojiData = {
@@ -89,18 +94,26 @@ type PathParams = {
 	link: string
 }
 
+type ChatListProps = {
+	posts: NewPost[]
+	handleContextMenu: (event: React.MouseEvent) => void
+	username: string
+}
+
 export {
 	PathParams,
 	EmojiData,
 	NewPost,
 	EmojiPickerProps,
-	ChatAsideProps,
 	ChatMessageProps,
 	StartScreenProps,
 	ChatHeaderProps,
 	TextInputProps,
 	ContextMenuProps,
+	ContextMenuType,
 	AvatarProps,
 	SendButtonProps,
 	ChatProps,
+	ChatFormProps,
+	ChatListProps,
 }

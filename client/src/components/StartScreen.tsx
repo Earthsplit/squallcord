@@ -8,14 +8,14 @@ const StartScreen: FC<StartScreenProps> = ({
 	onFileInputChange,
 }) => {
 	return (
-		<div className='m-auto flex h-screen  w-[750px] flex-col items-center justify-center'>
-			<h3>Введіть ваше імʼя</h3>
+		<div className='flex flex-col items-center justify-center'>
+			<h3>Enter your name</h3>
 			<form
 				onSubmit={joinRoom}
 				className='mt-4 flex flex-col gap-2'
 			>
 				<MyInput
-					placeholder='Файний хлопець 007'
+					placeholder='BobTop01'
 					onChange={event => {
 						setUsername(event.target.value)
 					}}
@@ -25,7 +25,7 @@ const StartScreen: FC<StartScreenProps> = ({
 					onClick={joinRoom}
 					className='rounded border border-grayLight py-[5px] px-[15px]'
 				>
-					Приєднатися
+					Join
 				</button>
 				<label className='flex justify-center border-b border-grayLight p-4'>
 					Add a profile picture

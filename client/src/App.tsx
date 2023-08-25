@@ -4,6 +4,7 @@ import Chat from './components/Chat'
 import './index.css'
 import StartScreen from './components/StartScreen'
 import { useEffect } from 'react'
+import { ContextMenuProvider } from './components/contextMenu/ContextMenu.provider'
 
 const socket: Socket = io('http://localhost:3001/')
 
@@ -38,7 +39,7 @@ const App: FC = () => {
 	}
 
 	return (
-		<div className='flex h-screen flex-col justify-center overflow-hidden bg-main text-white'>
+		<div className='flex h-screen flex-col items-center justify-center overflow-hidden bg-main text-white'>
 			{!showChat ? (
 				<StartScreen
 					joinRoom={joinRoom}
@@ -46,12 +47,14 @@ const App: FC = () => {
 					onFileInputChange={onFileInputChange}
 				/>
 			) : (
-				<Chat
-					socket={socket}
-					username={username}
-					avatar={avatar}
-					userCount={userCount}
-				/>
+				<ContextMenuProvider>
+					<Chat
+						socket={socket}
+						username={username}
+						avatar={avatar}
+						userCount={userCount}
+					/>
+				</ContextMenuProvider>
 			)}
 		</div>
 	)

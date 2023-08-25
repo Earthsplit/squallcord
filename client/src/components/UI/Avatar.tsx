@@ -8,12 +8,12 @@ const Avatar: FC<AvatarProps> = props => {
 			{props.src === '' ? (
 				<img
 					src={userDefault}
-					className='h-[44px] w-[44px] rounded-full'
+					className='h-[40px] w-[40px] rounded-full'
 				></img>
 			) : (
 				<img
 					{...props}
-					className={`${props.styles} rounded-full`}
+					className={`${props.styles} rounded-full object-cover`}
 				></img>
 			)}
 		</>
